@@ -1,0 +1,22 @@
+{
+  "name": "iot.server",
+  "version": "0.0.1",
+  "description": "",
+  "main": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "gert74",
+  "license": "",
+  "dependencies": {
+    "app-root-path": "^2.0.1",
+    "body-parser": "~1.12.4",
+    "config": "^1.24.0",
+    "dateformat": "1.0.12",
+    "dropbox": "^2.5.0",
+    "express": "~4.12.4",
+    "http-auth": "~2.2.6",
+    "moment-timezone": "~0.5.4",
+    "querystring": "~0.2.0"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "BasicAuth": {
+      "User": "user",
+      "Password": "pass"
+    },
+  "Timezone": "Europe/Zurich"
+}
