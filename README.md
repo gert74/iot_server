@@ -1,6 +1,6 @@
 # iot_server
 
-Simple IoT status server rendering heating data from CSV files from Dropbox.
+Simple IoT status server rendering an time series data from CSV files from Dropbox.
 
 Designed to use behind a reverse proxy like Nginx which terminates TLS. 
 

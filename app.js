@@ -10,12 +10,13 @@ var dateFormat = require('dateformat');
 var moment = require('moment-timezone');
 var fs = require('fs');
 var appRoot = require('app-root-path');
-var getHeizungData = require(appRoot+"/heatingFromDropbox.js");
+var getTimeSeriesData = require(appRoot+"/dropboxTimeSeriesDatabase.js");
 var config = require('config');
 
 var basicUsername = config.get('BasicAuth.User');
 var basicPassword = config.get('BasicAuth.Password');
 var timezone = config.get('Timezone');
+var LOG_PATH = config.get('HeatlogPathDropbox');
 
 var serverStart = moment.tz(new Date(), timezone);
 
@@ -23,7 +24,7 @@ var status = {
 	lastUpdate: "never",
         data: {state:"ready"},
         serverStart: serverStart.format('DD.MM.YYYY HH:mm'),
-        appVersion: "0.3"
+        appVersion: "0.4"
 }
 
 const PORT=8080; 
@@ -62,7 +63,7 @@ app.get('/heating.html', auth.connect(basic), function(req,res){
 
 app.get('/data.csv', auth.connect(basic),  function(req, res) {
     res.setHeader('Content-Type', 'text/plain');
-    getHeizungData(8,function(content) {
+    getTimeSeriesData(8, LOG_PATH,function(content) {
 	 res.end(content, encoding='utf8');
     });
 });
@@ -70,7 +71,7 @@ app.get('/data.csv', auth.connect(basic),  function(req, res) {
 app.post('/update', auth.connect(basic), function(req, res) {
     if (req) {
     	var now = new Date();
-        var nowMom = moment.tz(now, );
+        var nowMom = moment.tz(now, timezone);
  	status.lastUpdate = nowMom.format('DD.MM.YYYY HH:mm:ss');
 	if (req.body) {
                 var merged = {};

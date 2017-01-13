@@ -4,10 +4,10 @@ var fs = require('fs');
 
 var DROPBOX_TOKEN = fs.readFileSync(appRoot+'/dropbox_token.txt','utf8').trim();
 
-getHeatingData = function (numberOfFiles, callback){
+getTimeSeriesData = function (numberOfFiles, dropboxPath, callback){
 
 	var dbx = new Dropbox({ accessToken: DROPBOX_TOKEN });
-	dbx.filesListFolder({path: '/heatinglog'})
+	dbx.filesListFolder({path: dropboxPath})
 	  .then(function(response) {
 	    var files = [];
 	    var start = 0;
@@ -99,4 +99,4 @@ getHeatingData = function (numberOfFiles, callback){
 
 };
 
-module.exports = getHeatingData;
+module.exports = getTimeSeriesData;

@@ -3,5 +3,6 @@
       "User": "user",
       "Password": "pass"
     },
-  "Timezone": "Europe/Zurich"
+  "Timezone": "Europe/Zurich",
+  "HeatlogPathDropbox": "/heatinglog"
 }

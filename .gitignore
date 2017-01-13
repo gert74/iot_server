@@ -1,2 +1,4 @@
 dropbox_token.txt
 node_modules
+/change.sh
+/config/production.json
