@@ -22,11 +22,16 @@ getTimeSeriesData = function (numberOfFiles, dropboxPath, callback){
 	     dbx.filesDownload({ path: files[i].path })
 	      .then(function (data) {
 		var buff = new Buffer(data.fileBinary);
+                var found = false;
 		for (var i=0; i<files.length; i++) {
 			if (data.name == files[i].name) {
+                                found = true;
 				files[i].content = buff.toString('utf8');
 			}
 		}
+                if (!found) {
+                   console.error("error retrieved file which was not requested "+data.name);
+                }
 		responseCount++;
 		if (responseCount == files.length) {
 		   //last answer received 
@@ -34,7 +39,7 @@ getTimeSeriesData = function (numberOfFiles, dropboxPath, callback){
 		   var structuredContentAll = [];
 		   for (var i=0; i<files.length; i++) {
                    	var schema = files[i].content.substr(0, files[i].content.indexOf('\n'));
-			var fields = schema.split("\t");
+			var fields = schema.trim().split("\t");
 			for (var k=1; k<fields.length; k++) {
 				//add as dictionary
 				allfields[fields[k]]=fields[k];
@@ -43,7 +48,7 @@ getTimeSeriesData = function (numberOfFiles, dropboxPath, callback){
 			structuredContentAll = structuredContentAll.concat(content.split("\n")
 			    .filter(function(line) {
                                 //filter incomplete lines
-				var parts = line.split("\t");
+				var parts = line.trim().split("\t");
 				if (parts.length!=fields.length) {
 					return false;
 				}
@@ -51,7 +56,7 @@ getTimeSeriesData = function (numberOfFiles, dropboxPath, callback){
 			    }).map(function(line) {
     				//structuring lines
 				var structuredParts = {};
-                                var parts = line.split("\t");
+                                var parts = line.trim().split("\t");
 				for (var j=1;j<parts.length;j++) {
 					structuredParts[fields[j]]=parts[j];
 				}
@@ -94,7 +99,7 @@ getTimeSeriesData = function (numberOfFiles, dropboxPath, callback){
 	    }
 	  })
 	  .catch(function(error) {
-	    console.log(error);
+	    console.error(error);
 	  });
 
 };
