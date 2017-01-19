@@ -17,6 +17,7 @@ var basicUsername = config.get('BasicAuth.User');
 var basicPassword = config.get('BasicAuth.Password');
 var timezone = config.get('Timezone');
 var LOG_PATH = config.get('HeatlogPathDropbox');
+var getMonitoringServerEndpoints =  require(appRoot+"/monitoring.js");
 
 var serverStart = moment.tz(new Date(), timezone);
 
@@ -51,6 +52,13 @@ var basic = auth.basic({
         callback(username === basicUsername && password === basicPassword);
     }
 );
+
+var endpoints = getMonitoringServerEndpoints();
+for (var url in endpoints) {
+ console.log("Install endpoint "+url);
+ app.get(url, auth.connect(basic), endpoints[url]);
+}
+
 
 app.get('/', auth.connect(basic),  function(req, res) {
     res.setHeader('Content-Type', 'application/json');
