@@ -3,6 +3,14 @@
       "User": "user",
       "Password": "pass"
     },
+  "ServerModules": [ "/monitoring.js", "/status.js", "/dropboxTimeSeriesDatabase.js" ],
   "Timezone": "Europe/Zurich",
-  "HeatlogPathDropbox": "/heatinglog"
+  "HeatlogPathDropbox": "/heizunglog",
+  "Monitoring": { "Commands": [ { "id": "logins",
+                                  "request": "cat /var/log/auth.log | grep 'of user'"
+                                },{ "id": "netstat", 
+                                  "request": "netstat -tulpen"
+				},{ "id": "top",
+                                  "request": "top -b -n1"} ]
+                }
 }

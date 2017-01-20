@@ -1,6 +1,9 @@
 var Dropbox = require('dropbox');
 var appRoot = require('app-root-path');
 var fs = require('fs');
+var path = require('path');
+var config = require('config');
+var LOG_PATH = config.get('HeatlogPathDropbox');
 
 var DROPBOX_TOKEN = fs.readFileSync(appRoot+'/dropbox_token.txt','utf8').trim();
 
@@ -104,4 +107,29 @@ getTimeSeriesData = function (numberOfFiles, dropboxPath, callback){
 
 };
 
-module.exports = getTimeSeriesData;
+function getHeatingRequest(req,res){
+      res.sendFile(path.join(appRoot + '/heating.html'));
+}
+
+function getDataRequest(req, res) {
+    res.setHeader('Content-Type', 'text/plain');
+    getTimeSeriesData(8, LOG_PATH,function(content) {
+	 res.end(content, encoding='utf8');
+    });
+}
+
+getModuleInformation = function () {
+  return { serverEndpoints :
+           [{ endpointURL : "/data.csv",
+              requestType : "GET",
+              requestFunction : getDataRequest },
+            { endpointURL : "/heating.html",
+              requestType : "GET",
+              requestFunction : getHeatingRequest }
+           ]
+         };
+}
+
+module.exports = {
+ getModuleInformation:getModuleInformation
+};
