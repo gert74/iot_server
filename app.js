@@ -11,7 +11,7 @@ var basicUsername = config.get('BasicAuth.User');
 var basicPassword = config.get('BasicAuth.Password');
 var SERVER_MODULES = config.get('ServerModules');
 
-global.appVersion = '0.5'
+global.appVersion = '0.5.1'
 
 
 
@@ -61,7 +61,7 @@ SERVER_MODULES.forEach(function(module) {
 app.get('/',  auth.connect(basic), function (req, res) {
   res.render('index',
   { title : 'Home',
-    menus : ['<a href="/heating.html">Heating Data</a>','<a href="/status">Status</a>','<a href="/monitoring">Monitoring</a>'],
+    menus : ['<a href="/heating.html">Heating Data</a>','<a href="/chart.html">Heating Data 2</a>','<a href="/status">Status</a>','<a href="/monitoring">Monitoring</a>'],
     version : global.appVersion
   });
 });

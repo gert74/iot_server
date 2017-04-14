@@ -111,6 +111,14 @@ function getHeatingRequest(req,res){
       res.sendFile(path.join(appRoot + '/heating.html'));
 }
 
+function getChartsRequest(req,res){
+      res.sendFile(path.join(appRoot + '/frontend/charts.js'));
+}
+
+function getChartHtmlRequest(req,res){
+      res.sendFile(path.join(appRoot + '/frontend/chart.html'));
+}
+
 function getDataRequest(req, res) {
     res.setHeader('Content-Type', 'text/plain');
     getTimeSeriesData(8, LOG_PATH,function(content) {
@@ -123,6 +131,12 @@ getModuleInformation = function () {
            [{ endpointURL : "/data.csv",
               requestType : "GET",
               requestFunction : getDataRequest },
+            { endpointURL : "/js/charts.js",
+              requestType : "GET",
+              requestFunction : getChartsRequest },
+            { endpointURL : "/chart.html",
+              requestType : "GET",
+              requestFunction : getChartHtmlRequest },
             { endpointURL : "/heating.html",
               requestType : "GET",
               requestFunction : getHeatingRequest }

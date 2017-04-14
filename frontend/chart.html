@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<style>
+
+.axis--x path {
+  display: none;
+}
+
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+
+.legend-box {
+  cursor: pointer;  
+}
+
+
+</style>
+
+<svg id="svg1" width="1024" height="800"></svg>
+<br/>
+
+<script src="//d3js.org/d3.v4.min.js"></script>
+<script src="/js/charts.js"></script>
+<script>
+loadChart("data.csv","#svg1",";temp");
+</script>
+
